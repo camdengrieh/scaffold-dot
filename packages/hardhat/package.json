@@ -41,7 +41,6 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.4",
     "ethers": "^6.13.2",
-    "hardhat": "^2.22.10",
     "hardhat-deploy": "^0.12.4",
     "hardhat-deploy-ethers": "^0.4.2",
     "hardhat-gas-reporter": "^2.2.1",
@@ -55,9 +54,11 @@
   "dependencies": {
     "@inquirer/password": "^4.0.2",
     "@openzeppelin/contracts": "^5.0.2",
+    "@parity/hardhat-polkadot": "^0.1.6",
     "@typechain/ethers-v6": "^0.5.1",
     "dotenv": "^16.4.5",
     "envfile": "^7.1.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "solc": "0.8.28"
   }
 }

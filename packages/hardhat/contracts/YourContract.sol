@@ -36,7 +36,6 @@ contract YourContract {
         require(msg.sender == owner, "Not the Owner");
         _;
     }
-
     /**
      * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
      *

@@ -1,4 +1,4 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 Scaffold-DOT 
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
