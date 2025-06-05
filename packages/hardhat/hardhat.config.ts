@@ -2,11 +2,13 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@parity/hardhat-polkadot";
-
+import "@nomicfoundation/hardhat-ethers";
+import "hardhat-deploy-ethers";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
+import "hardhat-deploy";
 import { task } from "hardhat/config";
 
 import generateTsAbis from "./scripts/generateTsAbis";
@@ -22,13 +24,6 @@ const config = {
     compilers: [
       {
         version: "0.8.20",
-        settings: {
-          optimizer: {
-            enabled: true,
-            // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
-            runs: 200,
-          },
-        },
       },
     ],
   },
@@ -72,6 +67,18 @@ const config = {
   },
   sourcify: {
     enabled: false,
+  },
+  resolc: {
+    version: "1.5.2",
+    compilerSource: "npm",
+    settings: {
+      optimizer: {
+        enabled: true,
+        parameters: "z",
+        fallbackOz: true,
+        runs: 200,
+      },
+    },
   },
 };
 

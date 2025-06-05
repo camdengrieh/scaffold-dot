@@ -38,16 +38,20 @@ function getActualSourcesForContract(sources: Record<string, any>, contractName:
   for (const sourcePath of Object.keys(sources)) {
     const sourceName = sourcePath.split("/").pop()?.split(".sol")[0];
     if (sourceName === contractName) {
-      const contractContent = sources[sourcePath].content as string;
-      const regex = /contract\s+(\w+)\s+is\s+([^{}]+)\{/;
-      const match = contractContent.match(regex);
+      const sourceData = sources[sourcePath];
 
-      if (match) {
-        const inheritancePart = match[2];
-        // Split the inherited contracts by commas to get the list of inherited contracts
-        const inheritedContracts = inheritancePart.split(",").map(contract => `${contract.trim()}.sol`);
+      // Check if content exists and is a string
+      if (sourceData && sourceData.content && typeof sourceData.content === "string") {
+        const contractContent = sourceData.content;
+        const regex = /contract\s+(\w+)\s+is\s+([^{}]+)\{/;
+        const match = contractContent.match(regex);
 
-        return inheritedContracts;
+        if (match) {
+          const inheritancePart = match[2];
+          // Split the inherited contracts by commas to get the list of inherited contracts
+          const inheritedContracts = inheritancePart.split(",").map((contract: string) => `${contract.trim()}.sol`);
+          return inheritedContracts;
+        }
       }
       return [];
     }
@@ -56,23 +60,38 @@ function getActualSourcesForContract(sources: Record<string, any>, contractName:
 }
 
 function getInheritedFunctions(sources: Record<string, any>, contractName: string) {
-  const actualSources = getActualSourcesForContract(sources, contractName);
-  const inheritedFunctions = {} as Record<string, any>;
+  try {
+    const actualSources = getActualSourcesForContract(sources, contractName);
+    const inheritedFunctions = {} as Record<string, any>;
 
-  for (const sourceContractName of actualSources) {
-    const sourcePath = Object.keys(sources).find(key => key.includes(`/${sourceContractName}`));
-    if (sourcePath) {
-      const sourceName = sourcePath?.split("/").pop()?.split(".sol")[0];
-      const { abi } = JSON.parse(fs.readFileSync(`${ARTIFACTS_DIR}/${sourcePath}/${sourceName}.json`).toString());
-      for (const functionAbi of abi) {
-        if (functionAbi.type === "function") {
-          inheritedFunctions[functionAbi.name] = sourcePath;
+    for (const sourceContractName of actualSources) {
+      const sourcePath = Object.keys(sources).find(key => key.includes(`/${sourceContractName}`));
+      if (sourcePath) {
+        const sourceName = sourcePath?.split("/").pop()?.split(".sol")[0];
+        try {
+          const artifactPath = `${ARTIFACTS_DIR}/${sourcePath}/${sourceName}.json`;
+          if (fs.existsSync(artifactPath)) {
+            const { abi } = JSON.parse(fs.readFileSync(artifactPath).toString());
+            for (const functionAbi of abi) {
+              if (functionAbi.type === "function") {
+                inheritedFunctions[functionAbi.name] = sourcePath;
+              }
+            }
+          }
+        } catch (artifactError) {
+          // Skip if artifact file doesn't exist or can't be parsed
+          const errorMessage = artifactError instanceof Error ? artifactError.message : String(artifactError);
+          console.warn(`Warning: Could not read artifact for ${sourceName}:`, errorMessage);
         }
       }
     }
-  }
 
-  return inheritedFunctions;
+    return inheritedFunctions;
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.warn(`Warning: Could not process inherited functions for ${contractName}:`, errorMessage);
+    return {};
+  }
 }
 
 function getContractDataFromDeployments() {
@@ -84,11 +103,39 @@ function getContractDataFromDeployments() {
     const chainId = fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/.chainId`).toString();
     const contracts = {} as Record<string, any>;
     for (const contractName of getContractNames(`${DEPLOYMENTS_DIR}/${chainName}`)) {
-      const { abi, address, metadata } = JSON.parse(
-        fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/${contractName}.json`).toString(),
-      );
-      const inheritedFunctions = metadata ? getInheritedFunctions(JSON.parse(metadata).sources, contractName) : {};
-      contracts[contractName] = { address, abi, inheritedFunctions };
+      try {
+        const deploymentData = JSON.parse(
+          fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/${contractName}.json`).toString(),
+        );
+        const { abi, address, metadata } = deploymentData;
+
+        let inheritedFunctions = {};
+        if (metadata) {
+          try {
+            // Handle both cases: metadata as string (old format) or object (new format)
+            const metadataObj = typeof metadata === "string" ? JSON.parse(metadata) : metadata;
+
+            // Check if we have solc_metadata and it's a string that needs parsing
+            if (metadataObj.solc_metadata && typeof metadataObj.solc_metadata === "string") {
+              const solcMetadata = JSON.parse(metadataObj.solc_metadata);
+              if (solcMetadata.sources) {
+                inheritedFunctions = getInheritedFunctions(solcMetadata.sources, contractName);
+              }
+            } else if (metadataObj.sources) {
+              // Direct sources object
+              inheritedFunctions = getInheritedFunctions(metadataObj.sources, contractName);
+            }
+          } catch (metadataError) {
+            console.warn(`Warning: Could not parse metadata for contract ${contractName}:`, metadataError);
+            inheritedFunctions = {};
+          }
+        }
+
+        contracts[contractName] = { address, abi, inheritedFunctions };
+      } catch (error) {
+        console.error(`Error processing contract ${contractName}:`, error);
+        throw error;
+      }
     }
     output[chainId] = contracts;
   }

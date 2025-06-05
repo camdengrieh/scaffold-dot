@@ -41,11 +41,13 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.4",
     "ethers": "^6.13.2",
+    "hardhat": "^2.22.10",
     "hardhat-deploy": "^0.12.4",
     "hardhat-deploy-ethers": "^0.4.2",
     "hardhat-gas-reporter": "^2.2.1",
     "prettier": "^3.5.3",
     "prettier-plugin-solidity": "^1.4.1",
+    "solc": "0.8.20",
     "solidity-coverage": "^0.8.13",
     "ts-node": "^10.9.1",
     "typechain": "^8.3.2",
@@ -58,7 +60,6 @@
     "@typechain/ethers-v6": "^0.5.1",
     "dotenv": "^16.4.5",
     "envfile": "^7.1.0",
-    "qrcode": "^1.5.4",
-    "solc": "0.8.28"
+    "qrcode": "^1.5.4"
   }
 }

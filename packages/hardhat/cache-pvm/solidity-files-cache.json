@@ -1,0 +1,91 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/camdengrieh/Documents-Local/github/scaffold-dot/packages/hardhat/contracts/YourContract.sol": {
+      "lastModificationDate": 1749090321220,
+      "contentHash": "c8f592ba5a851208a1575f03c30575d5",
+      "sourceName": "contracts/YourContract.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.0 <0.9.0"
+      ],
+      "artifacts": [
+        "YourContract"
+      ]
+    },
+    "/Users/camdengrieh/Documents-Local/github/scaffold-dot/packages/hardhat/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1749090678794,
+      "contentHash": "681c532e816169606d13a5fe8b475074",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    }
+  }
+}
