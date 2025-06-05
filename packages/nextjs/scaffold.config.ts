@@ -14,7 +14,7 @@ export const POLKADOT_RPC_URL = "https://testnet-passet-hub-eth-rpc.polkadot.io"
 
 export const POLKADOT_CHAIN = {
   id: 420420421,
-  name: "Polkadot",
+  name: "Passet",
   nativeCurrency: {
     decimals: 18,
     name: "Polkadot",
