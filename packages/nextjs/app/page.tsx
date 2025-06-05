@@ -16,6 +16,7 @@ const Home: NextPage = () => {
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Scaffold-DOT</span>
+            <span className="block text-xl mt-2 text-secondary">🦄 Uniswap V2 Edition</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col">
             <p className="my-2 font-medium">Connected Address:</p>
@@ -28,9 +29,9 @@ const Home: NextPage = () => {
             </code>
           </p>
           <p className="text-center text-lg">
-            Edit your smart contract{" "}
+            Deploy and interact with{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
+              Uniswap V2 contracts
             </code>{" "}
             in{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
@@ -44,7 +45,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your smart contract using the{" "}
+                Interact with your Uniswap V2 contracts using the{" "}
                 <Link href="/debug" passHref className="link">
                   Debug Contracts
                 </Link>{" "}
@@ -54,7 +55,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the{" "}
+                Monitor your DEX transactions with the{" "}
                 <Link href="/blockexplorer" passHref className="link">
                   Block Explorer
                 </Link>{" "}

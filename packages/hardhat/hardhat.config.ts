@@ -23,7 +23,7 @@ const config = {
   solidity: {
     compilers: [
       {
-        version: "0.8.20",
+        version: "0.8.28",
       },
     ],
   },

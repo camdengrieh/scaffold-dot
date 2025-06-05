@@ -1,21 +1,33 @@
-# 🏗 Scaffold-DOT 
+# 🏗 Scaffold-DOT / Uniswap V2
+
+A complete Uniswap V2 deployment toolkit built on Scaffold-ETH 2, featuring Solidity 8 compatibility and core logic from [uniswapv2-solc0.8](https://github.com/islishude/uniswapv2-solc0.8).
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
   <a href="https://scaffoldeth.io">Website</a>
 </h4>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dApps) on the Polkadot ecosystem. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+🧪 An open-source toolkit for deploying and interacting with Uniswap V2 contracts on the Polkadot ecosystem and other EVM-compatible networks. Perfect for building DEX applications, understanding AMM mechanics, or experimenting with DeFi protocols.
 
 ⚙️ Built using NextJS, RainbowKit, Foundry/Hardhat, Wagmi, Viem, and Typescript.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Polkadot ecosystem.
+## ✨ Features
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+- ✅ **Complete Uniswap V2 Suite**: Factory, Router, and Pair contracts ready for deployment
+- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: React hooks for seamless smart contract interactions with TypeScript autocompletion
+- 🧱 **[Components](https://docs.scaffoldeth.io/components/)**: Pre-built web3 components for quick DEX frontend development
+- 🔥 **Burner Wallet & Local Faucet**: Test your DEX with a burner wallet and local faucet
+- 🔐 **Multi-Network Support**: Deploy on Polkadot ecosystem and major EVM networks
+- 🚀 **Auto-Generated ABIs**: Automatic TypeScript generation for seamless frontend integration
+
+## 🦄 Uniswap V2 Contracts
+
+This project includes a complete Uniswap V2 implementation:
+
+- **UniswapV2Factory**: Creates and manages trading pairs
+- **UniswapV2Router**: Handles swaps, liquidity addition/removal
+- **UniswapV2Pair**: Individual trading pair logic
+- **Mock WETH**: Automatically deployed on unsupported networks
 
 ## Requirements
 
@@ -27,57 +39,93 @@ Before you begin, you need to install the following tools:
 
 ## Quickstart
 
-To get started with Scaffold-DOT, follow the steps below:
+To get started with Scaffold-DOT Uniswap V2, follow the steps below:
 
-1. Install the latest version of Scaffold-DOT
+1. Clone this repository:
 
+```bash
+git clone https://github.com/your-repo/scaffold-dot-uniswap-v2.git
+cd scaffold-dot-uniswap-v2
+yarn install
 ```
-npx create-eth@latest
-```
-
-This command will install all the necessary packages and dependencies, so it might take a while.
-
-> [!NOTE]
-> You can also initialize your project with one of our extensions to add specific features or starter-kits. Learn more in our [extensions documentation](https://docs.scaffoldeth.io/extensions/).
 
 2. Run a local network in the first terminal:
 
-```
+```bash
 yarn chain
 ```
 
-This command starts a local Hardhat network that runs on your local machine and can be used for testing and development. Learn how to [customize your network configuration](https://docs.scaffoldeth.io/quick-start/environment#1-initialize-a-local-blockchain).
+This command starts a local Hardhat network for testing and development.
 
-3. On a second terminal, deploy the test contract:
+3. On a second terminal, deploy the Uniswap V2 contracts:
 
-```
+```bash
+# Deploy all contracts (including Uniswap V2)
 yarn deploy
+
+# Or deploy only Uniswap V2 contracts
+yarn deploy --tags UniswapV2
 ```
 
-This command deploys a test smart contract to the local network. You can find more information about how to customize your contract and deployment script in our [documentation](https://docs.scaffoldeth.io/quick-start/environment#2-deploy-your-smart-contract).
+This deploys:
+- Mock WETH (if needed)
+- UniswapV2Factory
+- UniswapV2Router
 
 4. On a third terminal, start your NextJS app:
 
-```
+```bash
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Visit your app on: `http://localhost:3000`. You can interact with your deployed contracts using the `Debug Contracts` page.
 
-**What's next**:
+## 🚀 Deployment Options
 
-Visit the [What's next section of our docs](https://docs.scaffoldeth.io/quick-start/environment#whats-next) to learn how to:
+### Deploy Everything
+```bash
+yarn deploy
+```
 
-- Edit your smart contracts
-- Edit your deployment scripts
-- Customize your frontend
-- Edit the app config
-- Writing and running tests
-- [Setting up external services and API keys](https://docs.scaffoldeth.io/deploying/deploy-smart-contracts#configuration-of-third-party-services-for-production-grade-apps)
+### Deploy Only Uniswap V2
+```bash
+yarn deploy --tags UniswapV2
+```
+
+### Deploy Individual Components
+```bash
+yarn deploy --tags Factory    # Factory only
+yarn deploy --tags Router     # Router only
+```
+
+## 🌐 Network Support
+
+The deployment script automatically handles:
+
+- **WETH Detection**: Uses existing WETH on supported networks
+- **Mock WETH**: Deploys mock WETH on unsupported networks
+- **Multi-Chain**: Supports Ethereum, Polygon, Base, and Polkadot ecosystem
+
+## 🛠 What's Next
+
+After deployment, you can:
+
+- **Create Trading Pairs**: Use the Factory to create new token pairs
+- **Add Liquidity**: Provide liquidity through the Router
+- **Execute Swaps**: Perform token swaps via the Router
+- **Build Frontend**: Use Scaffold-ETH components for DEX UI
+- **Monitor Activity**: Track transactions and pair creation
+
+## 📚 Key Files
+
+- `packages/hardhat/contracts/`: Uniswap V2 smart contracts
+- `packages/hardhat/deploy/00_deploy_uniswap_v2.ts`: Main deployment script
+- `packages/nextjs/contracts/`: Auto-generated contract ABIs
+- `packages/nextjs/components/scaffold-eth/`: Reusable web3 components
 
 ## Documentation
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn all the technical details and guides of Scaffold-DOT.
+Visit our [docs](https://docs.scaffoldeth.io) to learn all the technical details and guides of Scaffold-ETH.
 
 To know more about its features, check out our [website](https://scaffoldeth.io).
 
