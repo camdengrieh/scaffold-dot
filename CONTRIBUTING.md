@@ -1,18 +1,18 @@
-# Welcome to Scaffold-ETH 2 Contributing Guide
+# Welcome to Scaffold-DOT Contributing Guide
 
-Thank you for investing your time in contributing to Scaffold-ETH 2!
+Thank you for investing your time in contributing to Scaffold-DOT!
 
 This guide aims to provide an overview of the contribution workflow to help us make the contribution process effective for everyone involved.
 
 ## About the Project
 
-Scaffold-ETH 2 is a minimal and forkable repo providing builders with a starter kit to build decentralized applications on Ethereum.
+Scaffold-DOT is a minimal and forkable repo providing builders with a starter kit to build decentralized applications on Polkadot.
 
 Read the [README](README.md) to get an overview of the project.
 
 ### Vision
 
-The goal of Scaffold-ETH 2 is to provide the primary building blocks for a decentralized application.
+The goal of Scaffold-DOT is to provide the primary building blocks for a decentralized application.
 
 The repo can be forked to include integrations and more features, but we want to keep the `main` branch simple and minimal.
 
