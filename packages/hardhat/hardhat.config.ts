@@ -23,11 +23,11 @@ const config = {
   solidity: {
     compilers: [
       {
-        version: "0.8.28",
+        version: "0.8.30",
       },
     ],
   },
-  defaultNetwork: "passet",
+  defaultNetwork: "flare-testnet",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -43,42 +43,30 @@ const config = {
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
     },
-    passet: {
+    "flare-testnet": {
       polkavm: true,
-      url: `https://testnet-passet-hub-eth-rpc.polkadot.io`,
+      url: `https://coston2-api.flare.network/ext/C/rpc`,
       accounts: [deployerPrivateKey],
     },
   },
   etherscan: {
     apiKey: {
       // Is not required by blockscout. Can be any non-empty string
-      passet: "abc",
+      flare: "abc",
     },
     customChains: [
       {
-        network: "passet",
-        chainId: 420420421,
+        network: "flare-testnet",
+        chainId: 114,
         urls: {
-          apiURL: "https://blockscout-passet-hub.parity-testnet.parity.io/api",
-          browserURL: "https://blockscout-passet-hub.parity-testnet.parity.io/",
+          apiURL: "https://coston2.testnet.flarescan.com", //Fetch Api
+          browserURL: "https://coston2.testnet.flarescan.com",
         },
       },
     ],
   },
   sourcify: {
     enabled: false,
-  },
-  resolc: {
-    version: "1.5.2",
-    compilerSource: "npm",
-    settings: {
-      optimizer: {
-        enabled: true,
-        parameters: "z",
-        fallbackOz: true,
-        runs: 200,
-      },
-    },
   },
 };
 

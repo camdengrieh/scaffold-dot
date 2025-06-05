@@ -4225,7 +4225,7 @@ __metadata:
     prettier: ^3.5.3
     prettier-plugin-solidity: ^1.4.1
     qrcode: ^1.5.4
-    solc: 0.8.20
+    solc: 0.8.30
     solidity-coverage: ^0.8.13
     ts-node: ^10.9.1
     typechain: ^8.3.2
@@ -16522,23 +16522,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:0.8.20":
-  version: 0.8.20
-  resolution: "solc@npm:0.8.20"
-  dependencies:
-    command-exists: ^1.2.8
-    commander: ^8.1.0
-    follow-redirects: ^1.12.1
-    js-sha3: 0.8.0
-    memorystream: ^0.3.1
-    semver: ^5.5.0
-    tmp: 0.0.33
-  bin:
-    solcjs: solc.js
-  checksum: 8ff85f5e4aeda2018a97d1383284ed982ccc93fe528e1e78e3a8897e8da69848c7d44a8b1562e2ca9082b72c7a547827543eda6bcb12210e6a191e9e64baa5c8
-  languageName: node
-  linkType: hard
-
 "solc@npm:0.8.26":
   version: 0.8.26
   resolution: "solc@npm:0.8.26"
@@ -16556,7 +16539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:>=0.8.0 <=0.8.30":
+"solc@npm:0.8.30, solc@npm:>=0.8.0 <=0.8.30":
   version: 0.8.30
   resolution: "solc@npm:0.8.30"
   dependencies:
