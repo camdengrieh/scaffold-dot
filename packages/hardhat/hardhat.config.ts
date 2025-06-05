@@ -59,8 +59,8 @@ const config = {
         network: "passet",
         chainId: 420420421,
         urls: {
-          apiURL: "https://testnet-passet-hub-eth-rpc.polkadot.io/api",
-          browserURL: "https://testnet-passet-hub-eth-rpc.polkadot.io/",
+          apiURL: "https://blockscout-passet-hub.parity-testnet.parity.io/api",
+          browserURL: "https://blockscout-passet-hub.parity-testnet.parity.io/",
         },
       },
     ],

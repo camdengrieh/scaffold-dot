@@ -25,6 +25,12 @@ export const POLKADOT_CHAIN = {
       http: [POLKADOT_RPC_URL],
     },
   },
+  blockExplorers: {
+    default: {
+      name: "Passet Blockscout",
+      url: "https://blockscout-passet-hub.parity-testnet.parity.io/",
+    },
+  },
 } as const satisfies Chain;
 
 export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
