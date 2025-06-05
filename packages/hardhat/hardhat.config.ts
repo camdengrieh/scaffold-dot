@@ -1,86 +1,81 @@
-import * as dotenv from "dotenv";
+import '@parity/hardhat-polkadot';
+import "@nomicfoundation/hardhat-toolbox";
+import '@nomicfoundation/hardhat-ignition-ethers';
+import '@typechain/hardhat';
+import 'hardhat-gas-reporter';
+import 'solidity-coverage';
+import { HardhatUserConfig } from 'hardhat/types';
+import { task } from 'hardhat/config';
+import generateTsAbis from './scripts/generateTsAbis';
+import * as dotenv from 'dotenv';
 dotenv.config();
-import "@nomicfoundation/hardhat-chai-matchers";
-import "@parity/hardhat-polkadot";
 
-import "@typechain/hardhat";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
-import "@nomicfoundation/hardhat-verify";
-import { task } from "hardhat/config";
+// Custom task for generating TypeScript ABIs
+task("generate-abis", "Generate TypeScript ABI definitions for Scaffold-ETH 2")
+  .setAction(async (taskArgs, hre) => {
+    console.log("🚀 Generating TypeScript ABI definitions...");
+    try {
+      await generateTsAbis(hre);
+      console.log("✅ TypeScript ABI generation completed successfully!");
+    } catch (error) {
+      console.error("❌ Error generating TypeScript ABIs:", error);
+      throw error;
+    }
+  });
 
-import generateTsAbis from "./scripts/generateTsAbis";
+// Optional: Create a deployment pipeline task that runs both deploy and generate-abis
+task("deploy-and-generate", "Deploy contracts and generate TypeScript ABIs")
+  .setAction(async (taskArgs, hre) => {
+    console.log("🚀 Running deployment pipeline...");
+    
+    // Run the original deploy command
+    await hre.run("deploy", taskArgs);
+    
+    // Generate TypeScript ABIs after deployment
+    await hre.run("generate-abis");
+    
+    console.log("✅ Deployment pipeline completed successfully!");
+  });
 
-// If not set, it uses the hardhat account 0 private key.
-// You can generate a random account with `yarn generate` or `yarn account:import` to import your existing PK
-const deployerPrivateKey =
-  process.env.__RUNTIME_DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-// If not set, it uses our block explorers default API keys.
-
-const config = {
-  solidity: {
-    compilers: [
-      {
-        version: "0.8.20",
+const config: HardhatUserConfig = {
+    solidity: '0.8.28',
+    networks: {
+        hardhat: {
+            allowUnlimitedContractSize: false,
+        },
+        westend: {
+            url: 'wss://westend-rpc.polkadot.io',
+            polkavm: true,
+            accounts: [process.env.POLKADOT_PRIVATE_KEY || ''],
+        },
+        passet: {
+            url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
+            polkavm: true,
+            accounts: [process.env.POLKADOT_PRIVATE_KEY || ''],
+        },
+        sepolia: {
+            url: 'https://sepolia.infura.io/v3/YOUR_INFURA_KEY',
+        },
+        polygon: {
+            url: 'wss://polygon-bor-rpc.publicnode.com',
+        },
+        base: {
+            url: 'https://mainnet.base.org',
+        },
+    },
+    resolc: {
+        version: '1.5.2',
+        compilerSource: 'npm',
         settings: {
           optimizer: {
             enabled: true,
-            // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
+            parameters: 'z',
+            fallbackOz: true,
             runs: 200,
           },
         },
       },
-    ],
-  },
-  defaultNetwork: "passet",
-  namedAccounts: {
-    deployer: {
-      // By default, it will take the first Hardhat account as the deployer
-      default: 0,
-    },
-  },
-  networks: {
-    // View the networks that are pre-configured.
-    // If the network you are looking for is not here you can add new network settings
-    hardhat: {
-      forking: {
-        url: `https://testnet-passet-hub-eth-rpc.polkadot.io`,
-        enabled: process.env.MAINNET_FORKING_ENABLED === "true",
-      },
-    },
-    passet: {
-      polkavm: true,
-      url: `https://testnet-passet-hub-eth-rpc.polkadot.io`,
-      accounts: [deployerPrivateKey],
-    },
-  },
-  etherscan: {
-    apiKey: {
-      // Is not required by blockscout. Can be any non-empty string
-      passet: "abc",
-    },
-    customChains: [
-      {
-        network: "passet",
-        chainId: 420420421,
-        urls: {
-          apiURL: "https://testnet-passet-hub-eth-rpc.polkadot.io/api",
-          browserURL: "https://testnet-passet-hub-eth-rpc.polkadot.io/",
-        },
-      },
-    ],
-  },
-  sourcify: {
-    enabled: false,
-  },
-};
 
-// Extend the deploy task
-task("deploy").setAction(async (args: any, hre: any, runSuper: (arg0: any) => any) => {
-  // Run the original deploy task
-  await runSuper(args);
-  // Force run the generateTsAbis script
-  await generateTsAbis(hre);
-});
+};
 
 export default config;

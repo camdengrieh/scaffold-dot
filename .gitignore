@@ -21,3 +21,12 @@ node_modules
 
 # cli
 dist
+/packages/hardhat/.yarn
+/packages/hardhat/artifacts-pvm
+/packages/hardhat/cache
+/packages/hardhat/typechain-types
+/packages/hardhat/ignition/deployments
+/packages/hardhat/cache-pvm
+/packages/hardhat/artifacts
+packages/hardhat/.env.local
+packages/hardhat/.env
