@@ -439,7 +439,8 @@ export class SevenRoomsScraper {
     const increment = await this.findFirstLocator(this.selectors.partyIncrement);
     const decrement = await this.findFirstLocator(this.selectors.partyDecrement);
     if (!increment || !decrement) {
-      throw new AvailabilityError("Unable to find party size controls");
+      this.logger.warn("Party size controls not found; leaving default party size supplied by widget");
+      return;
     }
     for (let i = 0; i < 10; i += 1) {
       await decrement.click().catch(() => undefined);
