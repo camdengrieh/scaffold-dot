@@ -1,0 +1,36 @@
+{
+  "name": "@se-2/sevenrooms-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Headless SevenRooms reservation searcher and automated booking helper.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "sevenrooms": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "dev": "tsx src/cli.ts",
+    "lint": "tsc --noEmit",
+    "test": "echo \"No tests configured\""
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.49.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=20.18.3"
+  },
+  "packageManager": "yarn@3.2.3"
+}
