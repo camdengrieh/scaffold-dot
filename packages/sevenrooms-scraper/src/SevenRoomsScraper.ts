@@ -79,12 +79,14 @@ const DEFAULT_SELECTORS: DomSelectors = {
     '[data-testid="availability-list"]',
     '[data-testid="availability-results"]',
     '[data-testid="available-times"]',
+    '[data-test="reservation-availability-grid-primary"]',
   ],
   availabilityButton: [
     '[data-testid="availability-list"] button',
     '[data-testid="availability-results"] button',
     '[data-testid="available-times"] button',
     'button[data-testid="availability-button"]',
+    'button[data-test^="reservation-timeslot-button"]',
   ],
   loadingSpinner: ['[data-testid="availability-loading"]', '[data-testid="loading-indicator"]'],
   continueButton: ['button[data-testid="continue-button"]', 'button:has-text("Continue")'],
@@ -217,11 +219,22 @@ export class SevenRoomsScraper {
       return query.entryUrl;
     }
     const params = new URLSearchParams();
+    params.set("covers", String(query.partySize));
+    params.set("date", query.date);
+    if (query.time) {
+      params.set("time", query.time);
+    }
     if (query.location) {
       params.set("location", query.location);
     }
     if (query.experience) {
       params.set("experience", query.experience);
+    }
+    if (query.metadata) {
+      for (const [key, value] of Object.entries(query.metadata)) {
+        if (value === undefined) continue;
+        params.set(key, String(value));
+      }
     }
     const suffix = params.size > 0 ? `?${params.toString()}` : "";
     return `${DEFAULT_WIDGET_BASE}/${query.venueSlug}${suffix}`;
@@ -292,10 +305,12 @@ export class SevenRoomsScraper {
   }
 
   private normalizeSlot(slot: RawSlot, query: AvailabilitySearchInput, index: number): AvailabilitySlot {
+    const dataTestAttr = slot.attributes["data-test"];
     const candidateId =
       slot.dataset["availabilityId"] ??
       slot.dataset["id"] ??
       slot.attributes["data-availability-id"] ??
+      dataTestAttr ??
       `slot-${index}`;
     const action = slot.dataset["action"] === "waitlist" ? "waitlist" : "book";
     return {
